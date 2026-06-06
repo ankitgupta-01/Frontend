@@ -3279,7 +3279,7 @@ select.field-input {
 
 @page {
   size: A4 portrait;
-  margin: 6mm;
+  margin: 5mm;
 }
 
 @media print {
@@ -3304,27 +3304,25 @@ select.field-input {
 
   .inv-page-layout {
     display: block !important;
-    width: 198mm !important;
-    max-width: 198mm !important;
+    width: 200mm !important;
+    max-width: 200mm !important;
     margin: 0 auto !important;
   }
 
   .invoice-preview {
-    width: 198mm !important;
-    max-width: 198mm !important;
+    width: 200mm !important;
+    max-width: 200mm !important;
     min-height: auto !important;
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     overflow: visible !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
   }
 
   .inv-header {
     grid-template-columns: minmax(0, 1fr) 50mm !important;
-    padding: 7mm 7mm 4mm !important;
-    gap: 6mm !important;
+    padding: 4mm 6mm 2mm !important;
+    gap: 4mm !important;
   }
 
   .inv-right-info {
@@ -3332,7 +3330,7 @@ select.field-input {
   }
 
   .inv-meta-card {
-    padding: 2mm 2.5mm !important;
+    padding: 1.5mm 2mm !important;
   }
 
   .inv-meta-row {
@@ -3344,23 +3342,23 @@ select.field-input {
   }
 
   .inv-header-logo {
-    width: 17mm !important;
-    height: 17mm !important;
+    width: 14mm !important;
+    height: 14mm !important;
   }
 
   .inv-company-name {
-    font-size: 13pt !important;
+    font-size: 11.5pt !important;
   }
 
   .inv-company-sub,
   .inv-party-detail {
-    font-size: 8pt !important;
+    font-size: 7.5pt !important;
   }
 
   .inv-contact-chip,
   .gstin-badge,
   .inv-meta-val {
-    font-size: 7.2pt !important;
+    font-size: 6.8pt !important;
     overflow: visible !important;
     text-overflow: clip !important;
   }
@@ -3370,11 +3368,11 @@ select.field-input {
   }
 
   .inv-party {
-    padding: 4mm 7mm !important;
+    padding: 2.5mm 6mm !important;
   }
 
   .inv-table-wrap {
-    padding: 4mm 7mm 0 !important;
+    padding: 2mm 6mm 0 !important;
     overflow: visible !important;
   }
 
@@ -3384,18 +3382,18 @@ select.field-input {
   }
 
   .inv-table th {
-    padding: 2mm 1.2mm !important;
-    font-size: 6.6pt !important;
+    padding: 1.5mm 1.2mm !important;
+    font-size: 6.5pt !important;
   }
 
   .inv-table td {
-    height: 6.5mm !important;
-    padding: 1.4mm 1.2mm !important;
-    font-size: 7.1pt !important;
+    height: 5.6mm !important;
+    padding: 0.8mm 1.2mm !important;
+    font-size: 6.8pt !important;
   }
 
   .inv-footer {
-    padding: 3mm 7mm 0 !important;
+    padding: 2mm 6mm 0 !important;
   }
 
   .inv-totals-box {
@@ -3403,44 +3401,186 @@ select.field-input {
   }
 
   .inv-total-row {
-    padding: 1.5mm 2.5mm !important;
-    font-size: 7.5pt !important;
+    padding: 1mm 2mm !important;
+    font-size: 7pt !important;
   }
 
   .inv-words {
-    margin-top: 2.5mm !important;
-    padding: 1.8mm 2.5mm !important;
+    margin-top: 1.5mm !important;
+    padding: 1.2mm 2.5mm !important;
     grid-template-columns: 34mm 1fr !important;
   }
 
   .inv-words-label,
   .inv-notes-block label {
-    font-size: 6.7pt !important;
+    font-size: 6.5pt !important;
   }
 
   .inv-words-text,
   .inv-notes-block p,
   .inv-sign-label {
-    font-size: 7.1pt !important;
+    font-size: 6.8pt !important;
   }
 
   .inv-notes {
     grid-template-columns: 1fr 1fr !important;
-    margin-top: 2.5mm !important;
+    margin-top: 1.5mm !important;
   }
 
   .inv-notes-block {
-    padding: 2mm 2.5mm !important;
+    padding: 1.5mm 2.5mm !important;
   }
 
   .inv-sign-row {
-    margin-top: 2.5mm !important;
-    padding-top: 1.5mm !important;
+    margin-top: 1.5mm !important;
+    padding-top: 1mm !important;
   }
 
   .inv-sign-line {
-    margin-top: 7mm !important;
+    margin-top: 4.5mm !important;
   }
+}
+
+/* pdf-export classes to force desktop structure during export on mobile */
+body.pdf-export {
+  width: 980px !important;
+  background: #fff !important;
+}
+body.pdf-export .navbar,
+body.pdf-export .no-print,
+body.pdf-export .smodal-overlay {
+  display: none !important;
+}
+body.pdf-export .app-container {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body.pdf-export .inv-page-layout {
+  display: block !important;
+  width: 980px !important;
+  max-width: 980px !important;
+  margin: 0 auto !important;
+}
+body.pdf-export .invoice-preview {
+  width: 980px !important;
+  max-width: 980px !important;
+  min-height: auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+body.pdf-export .inv-header {
+  grid-template-columns: minmax(0, 1fr) 220px !important;
+  padding: 16px 24px 10px !important;
+  gap: 16px !important;
+  display: grid !important;
+}
+body.pdf-export .inv-header-left {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+}
+body.pdf-export .inv-right-info {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 220px !important;
+}
+body.pdf-export .inv-meta-card {
+  padding: 6px 8px !important;
+}
+body.pdf-export .inv-meta-row {
+  display: grid !important;
+  grid-template-columns: 42px minmax(max-content, 1fr) !important;
+}
+body.pdf-export .inv-meta-field {
+  display: grid !important;
+  grid-template-columns: 88px minmax(0, 1fr) !important;
+}
+body.pdf-export .inv-header-logo {
+  width: 60px !important;
+  height: 60px !important;
+}
+body.pdf-export .inv-company-name {
+  font-size: 18px !important;
+}
+body.pdf-export .inv-company-sub,
+body.pdf-export .inv-party-detail {
+  font-size: 11px !important;
+}
+body.pdf-export .inv-contact-chip,
+body.pdf-export .gstin-badge,
+body.pdf-export .inv-meta-val {
+  font-size: 10.5px !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+body.pdf-export .inv-parties {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+}
+body.pdf-export .inv-party {
+  padding: 10px 24px !important;
+}
+body.pdf-export .inv-table-wrap {
+  padding: 10px 24px 0 !important;
+  overflow: visible !important;
+}
+body.pdf-export .inv-table {
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+body.pdf-export .inv-table th {
+  padding: 6px 5px !important;
+  font-size: 8.5px !important;
+}
+body.pdf-export .inv-table td {
+  height: 22px !important;
+  padding: 4px 5px !important;
+  font-size: 9.5px !important;
+}
+body.pdf-export .inv-footer {
+  padding: 8px 24px 0 !important;
+}
+body.pdf-export .inv-totals-box {
+  width: 270px !important;
+}
+body.pdf-export .inv-total-row {
+  padding: 4px 8px !important;
+  font-size: 10px !important;
+}
+body.pdf-export .inv-words {
+  margin-top: 8px !important;
+  padding: 6px 10px !important;
+  grid-template-columns: 128px minmax(0, 1fr) !important;
+  display: grid !important;
+}
+body.pdf-export .inv-words-label,
+body.pdf-export .inv-notes-block label {
+  font-size: 8.5px !important;
+}
+body.pdf-export .inv-words-text,
+body.pdf-export .inv-notes-block p,
+body.pdf-export .inv-sign-label {
+  font-size: 10px !important;
+}
+body.pdf-export .inv-notes {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  margin-top: 8px !important;
+}
+body.pdf-export .inv-notes-block {
+  padding: 6px 10px !important;
+}
+body.pdf-export .inv-sign-row {
+  margin-top: 8px !important;
+  padding-top: 4px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+body.pdf-export .inv-sign-line {
+  margin-top: 18px !important;
 }
 
 /* ============================================
