@@ -33,20 +33,65 @@ export default function PublicBillPage() {
 
   const handleDownload = async () => {
     setDlLoading(true);
+    document.body.classList.add("pdf-export");
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
     try {
       await shareAPI.trackDL(token);
       const html2canvas = (await import('html2canvas')).default;
       const { jsPDF }   = await import('jspdf');
-      const canvas  = await html2canvas(printRef.current, { scale: 2, useCORS: true, backgroundColor: '#fff' });
+      
+      const canvas  = await html2canvas(printRef.current, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#fff',
+        windowWidth: 720,
+      });
+
       const imgData = canvas.toDataURL('image/png');
       const pdf     = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-      const w       = pdf.internal.pageSize.getWidth();
-      const h       = (canvas.height * w) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, w, h);
+      
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 6;
+      const maxWidth = pageWidth - margin * 2;
+      const maxHeight = pageHeight - margin * 2;
+      const imageRatio = canvas.width / canvas.height;
+      const imgWidth = maxWidth;
+      const imgHeight = maxWidth / imageRatio;
+
+      const scaleLimit = 1.12;
+
+      if (imgHeight <= maxHeight * scaleLimit) {
+        const renderHeight = Math.min(imgHeight, maxHeight);
+        const renderWidth = renderHeight * imageRatio;
+        pdf.addImage(
+          imgData,
+          'PNG',
+          (pageWidth - renderWidth) / 2,
+          margin,
+          renderWidth,
+          renderHeight
+        );
+      } else {
+        let leftHeight = imgHeight;
+        let position = margin;
+        while (leftHeight > 0) {
+          pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+          leftHeight -= maxHeight;
+          position -= maxHeight;
+          if (leftHeight > 0) {
+            pdf.addPage();
+          }
+        }
+      }
+
       pdf.save(`${invoice.invoiceNumber || 'bill'}.pdf`);
     } catch (e) {
+      console.error(e);
       alert('Download failed. Please try again.');
     } finally {
+      document.body.classList.remove("pdf-export");
       setDlLoading(false);
     }
   };
