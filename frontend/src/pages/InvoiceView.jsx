@@ -7,9 +7,9 @@ import ShareBillModal from '../components/ShareBillModal';
 const INTERIOR_IMG =
   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop';
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════
    BRAND COLOURS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════ */
 const C = {
   primary:  '#1a2b4a',
   accent:   '#c8860a',
@@ -19,17 +19,17 @@ const C = {
   text:     '#1e293b',
 };
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════
    A4 FIXED DIMENSIONS
-   794 Ã— 1123 px at 96 dpi  â‰¡  210 Ã— 297 mm
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   794 × 1123 px at 96 dpi  ≡  210 × 297 mm
+═══════════════════════════════════════════════════ */
 const A4_W  = 794;
 const A4_H  = 1123;
 const MX    = 24;   // margin left/right px
 const MB    = 24;   // margin bottom px
 
 /*
-  Section height constants (px) â€” calibrated carefully.
+  Section height constants (px) — calibrated carefully.
   These are the ACTUAL rendered heights of each section
   inside the 794px fixed container.
 */
@@ -40,24 +40,24 @@ const H = {
   tableHead:  36,    // thead row
   row:        27,    // one tbody row
   contLabel:  30,    // "Continued (Page N)" label on page 2+
-  // Footer sections â€” measured individually so we can check
+  // Footer sections — measured individually so we can check
   // if they fit together
-  totalsBox:  145,   // 5 rows Ã— ~29px each
+  totalsBox:  145,   // 5 rows × ~29px each
   words:       52,   // amount in words box
   notesGrid:  110,   // terms + bank details box
   signRow:     80,   // signature space + label
   footerPad:  12,    // top padding of footer
 };
 
-// Total footer height (all grouped â€” never split)
+// Total footer height (all grouped — never split)
 H.footer = H.footerPad + H.totalsBox + H.words + H.notesGrid + H.signRow + 20; // ~419
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════
    INLINE STYLE STRINGS
-   All inline â€” zero dependency on global.css
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   All inline — zero dependency on global.css
+═══════════════════════════════════════════════════ */
 const S = {
-  // Fixed A4 page shell â€” overflow:hidden clips anything beyond 1123px
+  // Fixed A4 page shell — overflow:hidden clips anything beyond 1123px
   page: `
     width:${A4_W}px;
     height:${A4_H}px;
@@ -400,12 +400,12 @@ const S = {
   signLabel: `font-size:10px;color:${C.muted};font-weight:600;`,
 };
 
-/* â”€â”€ Column widths: Sr + Desc + HSN + Size + Qty + Nos + Per + Rate + Amount â”€â”€ */
+/* ── Column widths: Sr + Desc + HSN + Size + Qty + Nos + Per + Rate + Amount ── */
 const COLS = [26, 205, 60, 74, 48, 40, 46, 66, 78];
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════
    HTML FRAGMENT BUILDERS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════ */
 function fAccentBar() {
   return `<div style="${S.accentBar}"></div>`;
 }
@@ -414,9 +414,9 @@ function fHeader(co, type, num, date, count) {
   const logo = co.logo
     ? `<img src="${co.logo}" alt="logo" style="${S.logo}" />` : '';
   const phone = co.phone
-    ? `<span style="${S.chip}">ðŸ“ž ${co.phone}</span>` : '';
+    ? `<span style="${S.chip}">📞 ${co.phone}</span>` : '';
   const email = co.email
-    ? `<span style="${S.chip}">âœ‰ï¸ ${co.email}</span>` : '';
+    ? `<span style="${S.chip}">✉️ ${co.email}</span>` : '';
   const gstin = co.gstin
     ? `<div style="${S.gstin}">GSTIN: ${co.gstin}</div>` : '';
 
@@ -456,7 +456,7 @@ function fParties(cl, num, date, type, count) {
   const cgstin = cl.gstin
     ? `<div style="${S.gstin};margin-top:4px;">${cl.gstin}</div>` : '';
   const csite = cl.siteAt
-    ? `<div style="${S.partyDetail}">ðŸ“ ${cl.siteAt}</div>` : '';
+    ? `<div style="${S.partyDetail}">📍 ${cl.siteAt}</div>` : '';
 
   return `
     <div style="${S.parties}">
@@ -523,14 +523,14 @@ function fTableClose() {
 function fRow(item, idx) {
   const even = idx % 2 === 1;
   const size = (item.sizeA && item.sizeB)
-    ? `${item.sizeA}Ã—${item.sizeB} ${item.sizeUnit}` : 'â€”';
-  const qty = (item.qty !== '' && item.qty !== undefined) ? item.qty : 'â€”';
+    ? `${item.sizeA}×${item.sizeB} ${item.sizeUnit}` : '—';
+  const qty = (item.qty !== '' && item.qty !== undefined) ? item.qty : '—';
   const mono = `font-family:'DM Mono',Courier,monospace;`;
   return `
     <tr>
       <td style="${S.td('center',false,even)}">${idx+1}</td>
       <td style="${S.tdDesc(even)}">${item.description||''}</td>
-      <td style="${S.td('center',false,even)}">${item.hsnSacCode||'â€”'}</td>
+      <td style="${S.td('center',false,even)}">${item.hsnSacCode||'—'}</td>
       <td style="${S.td('center',false,even)}">${size}</td>
       <td style="${S.td('center',false,even)}${mono}">${qty}</td>
       <td style="${S.td('center',false,even)}">${item.nos||1}</td>
@@ -544,7 +544,7 @@ function fRow(item, idx) {
 function fContLabel(type, num, pageNum) {
   return `
     <div style="${S.contLabel}">
-      ${type} ${num} â€” Continued (Page ${pageNum})
+      ${type} ${num} — Continued (Page ${pageNum})
     </div>
   `;
 }
@@ -557,7 +557,7 @@ function fFooter(inv) {
   } = inv;
 
   const roundStr = roundOff < 0
-    ? `â€“${formatCurrency(Math.abs(roundOff))}`
+    ? `–${formatCurrency(Math.abs(roundOff))}`
     : `+${formatCurrency(Math.abs(roundOff))}`;
 
   const wordsHtml = amountInWords ? `
@@ -618,7 +618,7 @@ function fFooter(inv) {
   `;
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════
    generatePDF()
 
    ALGORITHM:
@@ -633,17 +633,17 @@ function fFooter(inv) {
      tableHead(36) + rows(27 each)
 
    OVERFLOW:
-     remaining < row_H + row_H  â†’  new page
+     remaining < row_H + row_H  →  new page
      (we leave 1 row worth of buffer before deciding)
 
    AFTER LAST ROW:
-     remaining >= footer_H  â†’  footer here
-     remaining <  footer_H  â†’  new page for footer
+     remaining >= footer_H  →  footer here
+     remaining <  footer_H  →  new page for footer
 
-   Each page is a 794Ã—1123 div captured by html2canvas
+   Each page is a 794×1123 div captured by html2canvas
    with windowWidth:794 (viewport-independent).
    scale:4 gives crisp text on all devices.
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════ */
 async function generatePDF(invoice, setDlLoading) {
   setDlLoading(true);
 
@@ -659,7 +659,7 @@ async function generatePDF(invoice, setDlLoading) {
   const PDF_W  = pdf.internal.pageSize.getWidth();   // 210mm
   const PDF_H  = pdf.internal.pageSize.getHeight();  // 297mm
 
-  /* â”€â”€ Capture one A4-sized page â”€â”€ */
+  /* ── Capture one A4-sized page ── */
   async function capturePage(htmlStr, waitForImg) {
     const wrap = document.createElement('div');
     wrap.style.cssText = `
@@ -682,16 +682,16 @@ async function generatePDF(invoice, setDlLoading) {
       }
     }
 
-    // Paint-settle delay â€” CRITICAL on Android/iOS
+    // Paint-settle delay — CRITICAL on Android/iOS
     // 150ms is enough for Chrome; Safari sometimes needs 250ms
     await new Promise(r => setTimeout(r, 200));
 
     const canvas = await html2canvas(wrap.firstChild, {
-      scale:           4,          // high-DPI â€” crisp on all devices
+      scale:           4,          // high-DPI — crisp on all devices
       useCORS:         true,
       allowTaint:      false,
       backgroundColor: '#ffffff',
-      width:           A4_W,       // fixed â€” ignores real viewport
+      width:           A4_W,       // fixed — ignores real viewport
       height:          A4_H,
       windowWidth:     A4_W,       // KEY: forces 794px context everywhere
       windowHeight:    A4_H,
@@ -709,7 +709,7 @@ async function generatePDF(invoice, setDlLoading) {
     let usedH   = 0;
     let pageNum = 1;
 
-    /* â”€â”€ PAGE 1 fixed sections â”€â”€ */
+    /* ── PAGE 1 fixed sections ── */
     html   += fAccentBar();
     html   += fHeader(company, type, invoiceNumber, date, items.length);
     html   += fParties(client, invoiceNumber, date, type, items.length);
@@ -719,7 +719,7 @@ async function generatePDF(invoice, setDlLoading) {
     html   += fTableOpen();
     usedH  += H.tableHead;
 
-    /* â”€â”€ Item rows with pagination â”€â”€ */
+    /* ── Item rows with pagination ── */
     for (let i = 0; i < items.length; i++) {
       const isLast    = (i === items.length - 1);
       const remaining = A4_H - MB - usedH;
@@ -729,7 +729,7 @@ async function generatePDF(invoice, setDlLoading) {
       const spaceAfter = isLast ? H.footer : H.row * 2;
 
       if (remaining < H.row + spaceAfter) {
-        // Current row won't fit cleanly â†’ flush page, start new
+        // Current row won't fit cleanly → flush page, start new
         html  += fTableClose();
         pages.push(html);
 
@@ -754,11 +754,11 @@ async function generatePDF(invoice, setDlLoading) {
           html  += fFooter(invoice);
           pages.push(html);
         } else {
-          // Not enough space â€” footer gets its own page
+          // Not enough space — footer gets its own page
           pages.push(html);
           pageNum++;
           html  = fAccentBar();
-          html += `<div style="${S.contLabel}">${type} ${invoiceNumber} â€” Summary</div>`;
+          html += `<div style="${S.contLabel}">${type} ${invoiceNumber} — Summary</div>`;
           html += fFooter(invoice);
           pages.push(html);
         }
@@ -780,13 +780,13 @@ async function generatePDF(invoice, setDlLoading) {
       }
     }
 
-    /* â”€â”€ Render each page â†’ PDF â”€â”€ */
+    /* ── Render each page → PDF ── */
     for (let p = 0; p < pages.length; p++) {
       const canvas  = await capturePage(pages[p], p === 0);
       const imgData = canvas.toDataURL('image/png', 1.0);
 
-      // IMPORTANT: always use exact A4 dimensions (PDF_W Ã— PDF_H)
-      // NOT ratio-calculated height â€” that causes micro over/underflows
+      // IMPORTANT: always use exact A4 dimensions (PDF_W × PDF_H)
+      // NOT ratio-calculated height — that causes micro over/underflows
       if (p > 0) pdf.addPage();
       pdf.addImage(imgData, 'PNG', 0, 0, PDF_W, PDF_H);
     }
@@ -801,11 +801,11 @@ async function generatePDF(invoice, setDlLoading) {
   }
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   InvoiceView â€” React component
+/* ═══════════════════════════════════════════════════
+   InvoiceView — React component
    Screen layout: responsive (unchanged)
    PDF layout:    fixed 794px (generatePDF above)
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════ */
 export default function InvoiceView() {
   const { id }      = useParams();
   const navigate    = useNavigate();
@@ -847,29 +847,29 @@ export default function InvoiceView() {
   return (
     <div>
 
-      {/* â”€â”€ Toolbar â”€â”€ */}
+      {/* ── Toolbar ── */}
       <div className="no-print inv-toolbar">
         <div>
-          <h1 className="page-title">{type} â€” {invoiceNumber}</h1>
+          <h1 className="page-title">{type} — {invoiceNumber}</h1>
           <p className="page-subtitle">{client?.name} | {formatDate(date)}</p>
         </div>
         <div className="inv-toolbar-actions">
-          <button className="btn btn-outline" onClick={() => navigate('/')}>â† Back</button>
-          <button className="btn btn-outline" onClick={() => navigate(`/edit/${id}`)}>âœï¸ Edit</button>
-          <button className="btn btn-outline" onClick={handlePrint}>ðŸ–¨ Print</button>
-          <button className="btn btn-primary" onClick={() => setShowShare(true)}>ðŸ”— Share</button>
+          <button className="btn btn-outline" onClick={() => navigate('/')}>← Back</button>
+          <button className="btn btn-outline" onClick={() => navigate(`/edit/${id}`)}>✏️ Edit</button>
+          <button className="btn btn-outline" onClick={handlePrint}>🖨 Print</button>
+          <button className="btn btn-primary" onClick={() => setShowShare(true)}>🔗 Share</button>
           <button className="btn btn-accent" onClick={handlePDF} disabled={dlLoading}>
-            {dlLoading ? 'â³ Generating...' : 'â¬‡ï¸ Download PDF'}
+            {dlLoading ? '⏳ Generating...' : '⬇️ Download PDF'}
           </button>
         </div>
       </div>
 
-      {/* â”€â”€ Share Modal â”€â”€ */}
+      {/* ── Share Modal ── */}
       {showShare && invoice && (
         <ShareBillModal invoice={invoice} onClose={() => setShowShare(false)} />
       )}
 
-      {/* â”€â”€ Screen Preview (responsive, not used for PDF) â”€â”€ */}
+      {/* ── Screen Preview (responsive, not used for PDF) ── */}
       <div ref={printRef} className="inv-page-layout">
 
         {/* Invoice preview */}
@@ -887,10 +887,10 @@ export default function InvoiceView() {
                 <div className="inv-company-sub">{company?.address}</div>
                 <div className="inv-company-contact">
                   {company?.phone && (
-                    <span className="inv-contact-chip"><span>ðŸ“ž</span>{company.phone}</span>
+                    <span className="inv-contact-chip"><span>📞</span>{company.phone}</span>
                   )}
                   {company?.email && (
-                    <span className="inv-contact-chip"><span>âœ‰ï¸</span>{company.email}</span>
+                    <span className="inv-contact-chip"><span>✉️</span>{company.email}</span>
                   )}
                 </div>
                 {company?.gstin && (
@@ -923,7 +923,7 @@ export default function InvoiceView() {
               <div className="inv-party-label">Bill To: M/S</div>
               <div className="inv-party-name">{client?.name}</div>
               {client?.address && <div className="inv-party-detail">{client.address}</div>}
-              {client?.siteAt  && <div className="inv-party-detail">ðŸ“ Site: {client.siteAt}</div>}
+              {client?.siteAt  && <div className="inv-party-detail">📍 Site: {client.siteAt}</div>}
               {client?.gstin   && <div style={{marginTop:6}}><span className="gstin-badge">{client.gstin}</span></div>}
             </div>
             <div className="inv-party inv-party-meta">
@@ -970,13 +970,13 @@ export default function InvoiceView() {
                   <tr key={idx}>
                     <td style={{textAlign:'center',color:'#6b7280'}}>{idx+1}</td>
                     <td style={{textAlign:'left'}}>{item.description}</td>
-                    <td>{item.hsnSacCode||'â€”'}</td>
+                    <td>{item.hsnSacCode||'—'}</td>
                     <td>
                       {item.sizeA && item.sizeB
-                        ? `${item.sizeA}Ã—${item.sizeB} ${item.sizeUnit}` : 'â€”'}
+                        ? `${item.sizeA}×${item.sizeB} ${item.sizeUnit}` : '—'}
                     </td>
                     <td style={{fontFamily:'var(--mono)'}}>
-                      {item.qty!==''&&item.qty!==undefined ? item.qty : 'â€”'}
+                      {item.qty!==''&&item.qty!==undefined ? item.qty : '—'}
                     </td>
                     <td>{item.nos||1}</td>
                     <td>{item.per}</td>
@@ -994,15 +994,15 @@ export default function InvoiceView() {
               <div className="inv-totals-box">
                 <div className="inv-total-row">
                   <span className="t-label">Total Amount</span>
-                  <span className="t-val">â‚¹ {formatCurrency(totalAmount)}</span>
+                  <span className="t-val">₹ {formatCurrency(totalAmount)}</span>
                 </div>
                 <div className="inv-total-row">
                   <span className="t-label">CGST ({cgstPercent}%)</span>
-                  <span className="t-val">â‚¹ {formatCurrency(cgstAmount)}</span>
+                  <span className="t-val">₹ {formatCurrency(cgstAmount)}</span>
                 </div>
                 <div className="inv-total-row">
                   <span className="t-label">SGST ({sgstPercent}%)</span>
-                  <span className="t-val">â‚¹ {formatCurrency(sgstAmount)}</span>
+                  <span className="t-val">₹ {formatCurrency(sgstAmount)}</span>
                 </div>
                 <div className="inv-total-row">
                   <span className="t-label">Round Off</span>
@@ -1010,7 +1010,7 @@ export default function InvoiceView() {
                 </div>
                 <div className="inv-total-row grand-row">
                   <span className="t-label">GRAND TOTAL</span>
-                  <span className="t-val">â‚¹ {formatCurrency(grandTotal)}</span>
+                  <span className="t-val">₹ {formatCurrency(grandTotal)}</span>
                 </div>
               </div>
             </div>
@@ -1065,17 +1065,17 @@ export default function InvoiceView() {
           </div>
           <div className="inv-img-stats">
             <div className="inv-stat-chip">
-              <span className="inv-stat-icon">ðŸ“¦</span>
+              <span className="inv-stat-icon">📦</span>
               <div>
                 <div className="inv-stat-num">{items.length}</div>
                 <div className="inv-stat-lbl">Items</div>
               </div>
             </div>
             <div className="inv-stat-chip">
-              <span className="inv-stat-icon">ðŸ’°</span>
+              <span className="inv-stat-icon">💰</span>
               <div>
                 <div className="inv-stat-num">
-                  â‚¹{grandTotal>=1000
+                  ₹{grandTotal>=1000
                     ? `${Math.round(grandTotal/1000)}K`
                     : Math.round(grandTotal)}
                 </div>
@@ -1083,7 +1083,7 @@ export default function InvoiceView() {
               </div>
             </div>
             <div className="inv-stat-chip">
-              <span className="inv-stat-icon">ðŸ·ï¸</span>
+              <span className="inv-stat-icon">🏷️</span>
               <div>
                 <div className="inv-stat-num">{type==='QUOTATION'?'QUO':'INV'}</div>
                 <div className="inv-stat-lbl">Type</div>
@@ -1096,7 +1096,7 @@ export default function InvoiceView() {
             <div className="inv-num-hl-date">{formatDate(date)}</div>
           </div>
           <button className="inv-share-cta no-print" onClick={() => setShowShare(true)}>
-            <span>ðŸ”—</span>
+            <span>🔗</span>
             Share this {type==='QUOTATION'?'Quotation':'Invoice'}
           </button>
         </div>
