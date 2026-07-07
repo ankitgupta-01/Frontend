@@ -1,12 +1,11 @@
 import React from 'react';
-import { PER_OPTIONS, UNIT_OPTIONS, formatCurrency } from '../utils/helpers';
+import { UNIT_OPTIONS, formatCurrency } from '../utils/helpers';
 
 export default function ItemCard({ item, index, onChange, onDelete, canDelete }) {
 
   const update = (field, value) => {
     const updated = { ...item, [field]: value };
 
-    // Safe numeric helpers — never NaN / null / undefined
     const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
     const has = v => { const n = parseFloat(v); return isFinite(n) && n > 0; };
 
@@ -15,24 +14,22 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
     const nos  = field === 'nos'   ? num(value) : num(updated.nos);
     const rate = field === 'rate'  ? num(value) : num(updated.rate);
 
-    const sizeA    = field === 'sizeA' ? parseFloat(value) : parseFloat(updated.sizeA);
-    const sizeB    = field === 'sizeB' ? parseFloat(value) : parseFloat(updated.sizeB);
-    const hasSizeA = has(sizeA);
-    const hasSizeB = has(sizeB);
+    const hasSizeA = has(field === 'sizeA' ? parseFloat(value) : parseFloat(updated.sizeA));
+    const hasSizeB = has(field === 'sizeB' ? parseFloat(value) : parseFloat(updated.sizeB));
     const hasNos   = has(nos);
 
-    // ── CASE 1: Both sizes → Qty = SizeA × SizeB × NOS ──
+    // CASE 1: Both sizes → Qty = SizeA × SizeB × NOS
     if (hasSizeA && hasSizeB) {
       const effectiveNos = hasNos ? nos : 1;
       updated.qty    = parseFloat((a * b * effectiveNos).toFixed(4));
       updated.amount = parseFloat((updated.qty * rate).toFixed(2));
 
-    // ── CASE 2: No sizes, NOS provided → Qty = NOS ──
+    // CASE 2: No sizes, NOS provided → Qty = NOS
     } else if (hasNos) {
       updated.qty    = nos;
       updated.amount = parseFloat((nos * rate).toFixed(2));
 
-    // ── CASE 3: Only Rate → Qty = 1, Amount = Rate ──
+    // CASE 3: Only Rate → Qty = 1, Amount = Rate
     } else {
       updated.qty    = rate > 0 ? 1 : '';
       updated.amount = parseFloat(rate.toFixed(2));
@@ -41,10 +38,8 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
     onChange(updated);
   };
 
-  // ── Calc hint renderer ──
   const renderCalcHint = () => {
     if (!item.amount || item.amount <= 0) return null;
-
     const a   = parseFloat(item.sizeA);
     const b   = parseFloat(item.sizeB);
     const nos = parseFloat(item.nos);
@@ -53,7 +48,6 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
     const hasB = isFinite(b) && b > 0;
     const hasN = isFinite(nos) && nos > 0;
 
-    // Case 1 — full size
     if (hasA && hasB) {
       const effNos = hasN ? nos : 1;
       return (
@@ -64,8 +58,6 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
         </div>
       );
     }
-
-    // Case 2 — NOS only
     if (hasN) {
       return (
         <div className="calc-hint">
@@ -73,8 +65,6 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
         </div>
       );
     }
-
-    // Case 3 — rate only
     return (
       <div className="calc-hint">
         1 × ₹{r} = <strong>₹ {formatCurrency(item.amount)}</strong>
@@ -85,7 +75,7 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
   return (
     <div className="item-card">
 
-      {/* ── Card Header ── */}
+      {/* Card Header */}
       <div className="item-card-header">
         <div className="item-card-num">Item #{index + 1}</div>
         <div className="item-card-amount-preview">
@@ -95,13 +85,11 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
           }
         </div>
         {canDelete && (
-          <button className="item-delete-btn" onClick={onDelete} title="Remove item">
-            ✕
-          </button>
+          <button className="item-delete-btn" onClick={onDelete} title="Remove item">✕</button>
         )}
       </div>
 
-      {/* ── Card Body ── */}
+      {/* Card Body */}
       <div className="item-card-body">
 
         {/* Row 1: Description + HSN/SAC */}
@@ -126,10 +114,15 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
           </div>
         </div>
 
-        {/* Row 2: Size A × Size B + Unit → QTY (all optional) */}
+        {/* Row 2: Size A × Size B × Nos = QTY | Unit
+            Formula: QTY = Size A × Size B × Nos  */}
         <div className="size-row">
+
+          {/* Size A */}
           <div className="form-field-group size-field">
-            <label className="field-label">Size A <span className="field-optional">(opt)</span></label>
+            <label className="field-label">
+              Size A <span className="field-optional">(opt)</span>
+            </label>
             <input
               className="field-input center"
               type="number"
@@ -138,9 +131,14 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
               onChange={e => update('sizeA', e.target.value)}
             />
           </div>
+
           <div className="size-multiply">×</div>
+
+          {/* Size B */}
           <div className="form-field-group size-field">
-            <label className="field-label">Size B <span className="field-optional">(opt)</span></label>
+            <label className="field-label">
+              Size B <span className="field-optional">(opt)</span>
+            </label>
             <input
               className="field-input center"
               type="number"
@@ -149,6 +147,43 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
               onChange={e => update('sizeB', e.target.value)}
             />
           </div>
+
+          <div className="size-multiply">×</div>
+
+          {/* NOS — moved here so formula reads: A × B × Nos = QTY */}
+          <div className="form-field-group size-field">
+            <label className="field-label">
+              NOS <span className="field-optional">(opt)</span>
+            </label>
+            <input
+              className="field-input center"
+              type="number"
+              min="1"
+              placeholder="1"
+              value={item.nos}
+              onChange={e => update('nos', e.target.value)}
+            />
+          </div>
+
+          <div className="size-equals">=</div>
+
+          {/* QTY — auto calculated */}
+          <div className="form-field-group qty-result-field">
+            <label className="field-label">QTY <span className="auto-tag">Auto</span></label>
+            <div className="qty-result-box">
+              {item.qty !== '' && item.qty !== undefined && item.qty > 0
+                ? <>
+                    <span className="qty-val">{item.qty}</span>
+                    {parseFloat(item.sizeA) > 0 && parseFloat(item.sizeB) > 0 && (
+                      <span className="qty-unit">{item.sizeUnit}²</span>
+                    )}
+                  </>
+                : <span className="qty-placeholder">—</span>
+              }
+            </div>
+          </div>
+
+          {/* Unit — after QTY */}
           <div className="form-field-group size-unit-field">
             <label className="field-label">Unit</label>
             <select
@@ -159,46 +194,14 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
               {UNIT_OPTIONS.map(u => <option key={u}>{u}</option>)}
             </select>
           </div>
-          <div className="size-equals">=</div>
-          <div className="form-field-group qty-result-field">
-            <label className="field-label">QTY <span className="auto-tag">Auto</span></label>
-            <div className="qty-result-box">
-              {item.qty !== '' && item.qty !== undefined && item.qty > 0
-                ? <>
-                    <span className="qty-val">{item.qty}</span>
-                    {parseFloat(item.sizeA) > 0 && parseFloat(item.sizeB) > 0 &&
-                      <span className="qty-unit">{item.sizeUnit}²</span>
-                    }
-                  </>
-                : <span className="qty-placeholder">—</span>
-              }
-            </div>
-          </div>
+
         </div>
 
-        {/* Row 3: NOS + PER + Rate → Amount */}
+        {/* Row 3: Rate | Per (text input) | Amount
+            Order: Rate → Per → Amount              */}
         <div className="calc-row">
-          <div className="form-field-group">
-            <label className="field-label">NOS <span className="field-optional">(opt)</span></label>
-            <input
-              className="field-input center"
-              type="number"
-              min="1"
-              placeholder="1"
-              value={item.nos}
-              onChange={e => update('nos', e.target.value)}
-            />
-          </div>
-          <div className="form-field-group">
-            <label className="field-label">PER</label>
-            <select
-              className="field-input"
-              value={item.per}
-              onChange={e => update('per', e.target.value)}
-            >
-              {PER_OPTIONS.map(p => <option key={p}>{p}</option>)}
-            </select>
-          </div>
+
+          {/* Rate */}
           <div className="form-field-group">
             <label className="field-label">Rate (₹) <span className="required">*</span></label>
             <input
@@ -209,12 +212,27 @@ export default function ItemCard({ item, index, onChange, onDelete, canDelete })
               onChange={e => update('rate', e.target.value)}
             />
           </div>
+
+          {/* Per — FREE TEXT input (was dropdown) */}
           <div className="form-field-group">
+            <label className="field-label">Per</label>
+            <input
+              className="field-input"
+              type="text"
+              placeholder="SFT"
+              value={item.per}
+              onChange={e => update('per', e.target.value)}
+            />
+          </div>
+
+          {/* Amount — auto, spans 2 cols */}
+          <div className="form-field-group" style={{ gridColumn: 'span 2' }}>
             <label className="field-label">Amount <span className="auto-tag">Auto</span></label>
             <div className={`amount-result-box ${item.amount > 0 ? 'has-value' : ''}`}>
               ₹ {item.amount ? formatCurrency(item.amount) : '0.00'}
             </div>
           </div>
+
         </div>
 
         {/* Calc hint — live formula display */}
